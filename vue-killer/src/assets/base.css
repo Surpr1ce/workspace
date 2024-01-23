@@ -1,0 +1,11 @@
+/* semantic color variables for this project */
+:root {
+  --color-background: hsl(0deg 0% 6.27%);
+  --color-background-secondary: hsl(240deg 4% 9.8%);
+  --color-background-button: hsl(240deg 1.92% 20.39%);
+  --color-background-mute: #818181;
+
+  --color-heading: white;
+  --color-text: white;
+  --color-orange: #ff9900;
+}
