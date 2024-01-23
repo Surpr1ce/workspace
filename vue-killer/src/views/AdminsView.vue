@@ -4,7 +4,7 @@
         <div class="row">
             <!-- ServerInfo -->
             <div class="col-12 col-lg-4 mb-3">
-                <ServerInfo :servers="serverStore" />
+                <ServerInfo :servers="servers" />
             </div>
 
             <!-- NavigationLinks -->
@@ -41,6 +41,7 @@ import ServerInfo from '@/components/ServerInfo.vue';
 import SocialLinks from '@/components/SocialLinks.vue';
 import Welcome from '@/components/Welcome.vue';
 import { useBlogStore } from '@/stores/blogs';
+import { useServerStore } from '@/stores/servers';
 export default {
     components: {
         AdminProfileList,
@@ -53,35 +54,20 @@ export default {
     data() {
         return {
             blogStore: useBlogStore(),
-            serverStore: [
-                {
-                    server_id: 403211,
-                    hostname: 'RealGamingCZ Tester',
-                    is_running: true,
-                    ip: '82.208.17.10',
-                    port: 27280,
-                    players: 10,
-                    slots: 100
-                },
-                {
-                    server_id: 403211,
-                    hostname: 'RealGamingCZ Tester 2',
-                    is_running: false,
-                    ip: '82.208.17.10',
-                    port: 28280,
-                    players: 9,
-                    slots: 100
-                }
-            ]
+            serverStore: useServerStore(),
         }
     },
     computed: {
         blogs() {
             return this.blogStore.getBlogs
+        },
+        servers() {
+            return this.serverStore.getServers
         }
     },
     mounted() {
         this.blogStore.fetchBlogs();
+        this.serverStore.fetchServers();
     },
 }
 </script>
