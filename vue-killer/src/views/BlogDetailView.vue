@@ -1,6 +1,9 @@
 <template>
     <Welcome />
-    <div class="container mt-5 mb-5">
+    <div class="container mt-4 mb-5">
+        <div class="info">
+            <h2>Informácie o serveri </h2>
+        </div>
         <div class="row">
             <!-- ServerInfo -->
             <div class="col-12 col-lg-4 mb-3">
@@ -44,13 +47,13 @@ import { useBlogStore } from '@/stores/blogs';
 import { useServerStore } from '@/stores/servers';
 export default {
     components: {
-    BlogDetail,
-    Welcome,
-    LatestForumPost,
-    SocialLinks,
-    NavigationLinks,
-    ServerInfo
-},
+        BlogDetail,
+        Welcome,
+        LatestForumPost,
+        SocialLinks,
+        NavigationLinks,
+        ServerInfo
+    },
     data() {
         return {
             blogStore: useBlogStore(),

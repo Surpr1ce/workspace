@@ -26,7 +26,7 @@
 
         <!-- Right Section -->
         <div class="navbar-text">
-          <router-link to="/" class="nav-link" :class="{ 'active-link': $route.path === '/prihlasit' }"><i
+          <router-link to="/prihlasit" class="nav-link" :class="{ 'active-link': $route.path === '/prihlasit' }"><i
               class="fas fa-sign-in-alt"></i> Prihlasit</router-link>
         </div>
       </div>

@@ -4,6 +4,9 @@ import AdminsView from '../views/AdminsView.vue'
 import BanlistView from '../views/BanlistView.vue'
 import ForumView from '../views/ForumView.vue'
 import BlogDetailView from '../views/BlogDetailView.vue';
+import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import ForgotpwView from '../views/ForgotpwView.vue'
 
 
 const router = createRouter({
@@ -13,6 +16,21 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/prihlasit',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/registrovat',
+      name: 'register',
+      component: RegisterView
+    },
+    {
+      path: '/zabudnute-heslo',
+      name: 'forgotpw',
+      component: ForgotpwView
     },
     {
       path: '/admini',

@@ -1,5 +1,7 @@
 <?php
-
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Origin: *');
 $options = [
     'http' => [
         'header' => "Authorization: Bearer CWlpSmAhB4GNyowB3514zhuO2gpGGtlyuvyoF2tB\r\n",

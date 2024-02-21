@@ -2,6 +2,9 @@
     <Welcome />
     <div class="content">
         <div class="container mt-4">
+            <div class="info">
+                <h2>Informácie o serveri </h2>
+            </div>
             <div class="row">
                 <!-- ServerInfo -->
                 <div class="col-12 col-lg-4 mb-3">
