@@ -13,8 +13,13 @@
                 </div>
                 <div class="row" v-for="server in servers" :key="server.server_id">
                     <div class="col-10 col-sm-10 d-flex align-items-center">
-                        <img src="/images/samp.png" class="img-fluid rounded-circle border" width="15px"
-                            :class="[isRunning(server)]" height="15px" style="margin-right: 5px;" alt="Server Image" />
+                        <img 
+                        :src="server.image" 
+                        :class="[{'img-fluid': true, 'rounded-circle': true, 'border': true}, isRunning(server)]"
+                        width="15px"
+                        height="15px" 
+                        style="margin-right: 5px;" 
+                        alt="Server Image" />
                         <a :href="serverLink(server)" class="text-decoration-none text-orange">{{ serverIP(server) }}</a>
                     </div>
                     <div class="col-2 col-sm-2 text-center">
@@ -34,7 +39,7 @@ export default {
     },
     computed: {
         serverLink() {
-            return (server) => `samp://${server.ip}:${server.port}`;
+            return (server) => `${server.type}://${server.ip}:${server.port}`;
         },
         serverIP() {
             return (server) => `${server.ip}:${server.port}`

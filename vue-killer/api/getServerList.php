@@ -2,45 +2,51 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Origin: *');
-$options = [
-    'http' => [
-        'header' => "Authorization: Bearer CWlpSmAhB4GNyowB3514zhuO2gpGGtlyuvyoF2tB\r\n",
-    ],
-];
+require_once "DB.php";
 
-// Get the list of servers
-$resultList = file_get_contents("https://www.fakaheda.eu/fhapi/v1/servers/list", false, stream_context_create($options));
-$serverList = json_decode($resultList, true);
+$db = new DB();
 
-if ($serverList['result'] && isset($serverList['servers'])) {
-    $outputArray = [];
+try {
+    $connection = $db->getConnection();
 
-    $servers = $serverList['servers'];
+    $query = "SELECT s.adress, s.port, st.type, st.image
+              FROM servers s
+              INNER JOIN server_type st ON s.server_type_id = st.id";
 
-    // Iterate through each server and get details
-    foreach ($servers as $server) {
-        $serverId = $server['server_id'];
+    $statement = $connection->prepare($query);
+    $statement->execute();
 
-        // Get detailed information for the server
-        $resultDetails = file_get_contents("https://www.fakaheda.eu/fhapi/v1/servers/{$serverId}", false, stream_context_create($options));
-        $serverDetails = json_decode($resultDetails, true);
+    $servers = [];
 
-        // Process the server details
-        if ($serverDetails['result']) {
-            $output = [
-                'server_id' => $serverId,
-                'hostname' => $serverDetails['hostname'],
-                'is_running' => $serverDetails['is_running'],
-                'ip' => $serverDetails['ip'],
-                'port' => $serverDetails['port'],
-                'players' => $serverDetails['players'],
-                'slots' => $serverDetails['slots'],
+    while ($serverData = $statement->fetch(PDO::FETCH_ASSOC)) {
+        $address = $serverData['adress'];
+        $port = $serverData['port'];
+        $type = $serverData['type'];
+        $image = $serverData['image'];
+
+        $url = "https://query.fakaheda.eu/{$address}:{$port}.feed";
+
+        $json = file_get_contents($url);
+
+        $data = json_decode($json, true);
+
+        // Check if 'status' is 'notfound', if so, skip adding this record
+        if ($data['status'] !== 'notfound') {
+            $servers[] = [
+                'hostname' => $data['hostname'],
+                'is_running' => $data['status'],
+                'ip' => $address,
+                'port' => $port,
+                'players' => $data['players'],
+                'slots' => $data['slots'],
+                'type' => $type,
+                'image' => $image
             ];
-
-            $outputArray[] = $output;
         }
     }
-    echo json_encode($outputArray); 
-} else {
+    echo json_encode($servers);
+} catch (PDOException $e) {
     echo json_encode(['error' => 'Failed to fetch server list.']);
+    die("Database connection failed: " . $e->getMessage());
 }
+

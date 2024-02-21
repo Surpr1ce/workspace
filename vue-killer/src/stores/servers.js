@@ -13,7 +13,7 @@ export const useServerStore = defineStore('server', {
   actions: {
     async fetchServers() {
       try {
-        const response = await axios.get('http://localhost:3000/vue-killer/api/getSeverList.php');
+        const response = await axios.get('http://localhost:3000/vue-killer/api/getServerList.php');
         this.servers = response.data;
       } catch (error) {
         console.error('Error fetching servers:', error);
